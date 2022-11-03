@@ -34,7 +34,7 @@ class Ephemeral(Strategy):
                 continue
             is_blockable = True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or blocking_card.health == 1 or enemy_card.health <= blocking_card.attack:  # Aggressive block
+            if "Ephemeral" in blocking_card.keywords or blocking_card.health == 1 or enemy_card.health <= blocking_card.attack or blocking_card.health > enemy_card.attack:  # Aggressive block
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
                         is_blockable = False
