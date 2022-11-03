@@ -34,7 +34,7 @@ class Ephemeral(Strategy):
                 continue
             is_blockable = True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or blocking_card.health == 1 or enemy_card.health <= blocking_card.attack:  # Aggressive block
+            if "Ephemeral" in blocking_card.keywords or blocking_card.health == 1 or blocking_card.health > enemy_card.attack or blocking_card.health <= (enemy_card.attack*3):  # Aggressive block
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
                         is_blockable = False
@@ -47,6 +47,20 @@ class Ephemeral(Strategy):
     def playable_card(self, playable_cards, game_state, cards_on_board):
         attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
                              3 * int("Ephemeral" in attack_card.keywords), reverse=True)
+        for playable_card_in_hand in attack_sort:
+            name = playable_card_in_hand.get_name()
+            if name == "Hecarim" and ("Ephemeral" not in playable_card_in_hand.keywords):
+                return playable_card_in_hand
+            if name == "Zed" and ("Ephemeral" not in playable_card_in_hand.keywords):
+                return playable_card_in_hand  
+            if game_state == GameState.Defend_Turn:
+                if name == "Soul Shepherd":
+                    return playable_card_in_hand
+                if name == "Shadow Apprentice":
+                    return playable_card_in_hand
+                if name == "Opulent Foyer":
+                    return playable_card_in_hand
+                             
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
             if name == "Shadowshift":

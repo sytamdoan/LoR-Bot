@@ -46,6 +46,82 @@
     "associatedCardRefs": [],
     "assets": [
       {
+        "gameAbsolutePath": "http://dd.b.pvp.net/3_14_0/set1/en_us/img/cards/01SI038.png",
+        "fullAbsolutePath": "http://dd.b.pvp.net/3_14_0/set1/en_us/img/cards/01SI038-full.png"
+      }
+    ],
+    "regions": [
+      "Shadow Isles"
+    ],
+    "regionRefs": [
+      "ShadowIsles"
+    ],
+    "attack": 2,
+    "cost": 3,
+    "health": 3,
+    "description": "When you summon an <link=keyword.Ephemeral><sprite name=Ephemeral><style=Keyword>Ephemeral</style></link> ally, grant it +1|+1.",
+    "descriptionRaw": "When you summon an <link=keyword.Ephemeral><sprite name=Ephemeral><style=Keyword>Ephemeral</style></link> ally, grant it +1|+1.",
+    "levelupDescription": "",
+    "levelupDescriptionRaw": "",
+    "flavorText": "Does This Matter?",
+    "artistName": "XAXIERLEROUX",
+    "name": "Moonlit Glenkeeper",
+    "cardCode": "06SI041",
+    "keywords": [],
+    "keywordRefs": [],
+    "spellSpeed": "",
+    "spellSpeedRef": "",
+    "rarity": "COMMON",
+    "rarityRef": "common",
+    "subtypes": [],
+    "supertype": "",
+    "type": "Unit",
+    "collectible": true,
+    "set": "Set1"
+  },
+  {
+    "associatedCards": [],
+    "associatedCardRefs": [],
+    "assets": [
+      {
+        "gameAbsolutePath": "http://dd.b.pvp.net/3_14_0/set1/en_us/img/cards/01SI038.png",
+        "fullAbsolutePath": "http://dd.b.pvp.net/3_14_0/set1/en_us/img/cards/01SI038-full.png"
+      }
+    ],
+    "regions": [
+      "Shadow Isles"
+    ],
+    "regionRefs": [
+      "ShadowIsles"
+    ],
+    "attack": 0,
+    "cost": 3,
+    "health": 0,
+    "description": "Does This Matter?",
+    "descriptionRaw": "Does This Matter?",
+    "levelupDescription": "",
+    "levelupDescriptionRaw": "",
+    "flavorText": "Does This Matter?",
+    "artistName": "XAXIERLEROUX",
+    "name": "Opulent Foyer",
+    "cardCode": "06SI014",
+    "keywords": [],
+    "keywordRefs": [],
+    "spellSpeed": "",
+    "spellSpeedRef": "",
+    "rarity": "COMMON",
+    "rarityRef": "common",
+    "subtypes": [],
+    "supertype": "",
+    "type": "Landmark",
+    "collectible": true,
+    "set": "Set1"
+  },
+  {
+    "associatedCards": [],
+    "associatedCardRefs": [],
+    "assets": [
+      {
         "gameAbsolutePath": "http://dd.b.pvp.net/3_14_0/set1/en_us/img/cards/01IO012T2.png",
         "fullAbsolutePath": "http://dd.b.pvp.net/3_14_0/set1/en_us/img/cards/01IO012T2-full.png"
       }
@@ -16012,7 +16088,7 @@
       "ShadowIsles"
     ],
     "attack": 0,
-    "cost": 9,
+    "cost": 10,
     "health": 0,
     "description": "Revive the 6 <link=vocab.Strongest><style=Vocab>strongest</style></link> allies that died this game and grant them <link=keyword.Ephemeral><sprite name=Ephemeral><style=Keyword>Ephemeral</style></link>.",
     "descriptionRaw": "Revive the 6 strongest allies that died this game and grant them Ephemeral.",
