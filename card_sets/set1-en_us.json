@@ -16012,7 +16012,7 @@
       "ShadowIsles"
     ],
     "attack": 0,
-    "cost": 9,
+    "cost": 10,
     "health": 0,
     "description": "Revive the 6 <link=vocab.Strongest><style=Vocab>strongest</style></link> allies that died this game and grant them <link=keyword.Ephemeral><sprite name=Ephemeral><style=Keyword>Ephemeral</style></link>.",
     "descriptionRaw": "Revive the 6 strongest allies that died this game and grant them Ephemeral.",
