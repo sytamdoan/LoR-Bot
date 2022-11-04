@@ -18,7 +18,7 @@ class Ephemeral(Strategy):
         self.window_height = window_height
 
         for i, blocking_card in enumerate(cards_on_board["cards_board"]):
-            if i < self.block_counter or blocking_card.get_name() == "Zed" or "Can't Block" in blocking_card.keywords:
+            if i < self.block_counter or blocking_card.get_name() == "Zed" or "Can't Block" in blocking_card.keywords or "Stun" in blocking_card.keywords:
                 continue
             if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"]):
                 self.block_counter = (self.block_counter + 1) % len(cards_on_board["cards_board"])
@@ -34,13 +34,15 @@ class Ephemeral(Strategy):
                 continue
             is_blockable = True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or blocking_card.health == 1 or blocking_card.health > enemy_card.attack or blocking_card.health <= (enemy_card.attack*3):  # Aggressive block
+            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) <= enemy_card.attack):  # Aggressive block
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
                         is_blockable = False
                         break
                 if is_blockable:
                     self.drag_card_from_to(blocking_card.get_pos(), enemy_card.get_pos())
+                    print("                          Blocker: ", blocking_card.get_name())
+                    print("                          Attacker: ", enemy_card.get_name())
                     return True
         return False
 
