@@ -34,7 +34,7 @@ class Ephemeral(Strategy):
                 continue
             is_blockable = True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) <= enemy_card.attack) or ((enemy_card.health == blocking_card.attack) && "Elusive" not in blocking_card.keywords):  # Aggressive block
+            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) <= enemy_card.attack) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords):  # Aggressive block
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
                         is_blockable = False
@@ -62,7 +62,7 @@ class Ephemeral(Strategy):
                     return playable_card_in_hand
                 if name == "Opulent Foyer":
                     return playable_card_in_hand
-                if name = "Shark Chariot":
+                if name == "Shark Chariot":
                     return playable_card_in_hand         
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
