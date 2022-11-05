@@ -20,15 +20,17 @@ class Ephemeral(Strategy):
         for i, blocking_card in enumerate(cards_on_board["cards_board"]):
             if i < self.block_counter or "Can't Block" in blocking_card.keywords or "Stun" in blocking_card.keywords:
                 continue
-            if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"], turn):
+            if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"],cards_on_board["cards_hand"], turn):
                 self.block_counter = (self.block_counter + 1) % len(cards_on_board["cards_board"])
                 return True
 
         self.block_counter = 0
         return False
 
-    def blocked_with(self, blocking_card, enemy_cards, ally_cards, turn):
-        harrowingTurn = self.Harrow_is_coming(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"], turn);
+    def blocked_with(self, blocking_card, enemy_cards, ally_cards, cards_in_hand, turn):
+        harrowingTurn = (self.cards_on_board["cards_hand"], turn);
+        if(harrowingTurn):
+            print(" Harrowing Is Coming")
         for enemy_card in enemy_cards:
             # Elusive and Fearsome check
             if "Elusive" in enemy_card.keywords or "Fearsome" in enemy_card.keywords and blocking_card.attack < 3:
@@ -140,10 +142,8 @@ class Ephemeral(Strategy):
         # Select the strongest
         return max(units_in_hand, key=lambda card_in_hand: card_in_hand.attack + card_in_hand.health)
 
-    def Harrow_is_coming(self, playable_cards, game_state, cards_on_board, turn) -> bool:
-            attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
-                                 3 * int("Ephemeral" in attack_card.keywords), reverse=True)
-            for playable_card_in_hand in attack_sort:
+    def Harrow_is_coming(self, cards_on_board, turn) -> bool:
+            for playable_card_in_hand in cards_on_board:
                 if name == "The Harrowing" and turn >= 6 :
                     return True;
             return False
