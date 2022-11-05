@@ -57,6 +57,8 @@ class Ephemeral(Strategy):
                     print("                          Blocker: ", blocking_card.get_name())
                     print("                          Attacker: ", enemy_card.get_name())
                     return True
+        print("                          Not blocking against Attacker: ", enemy_card.get_name())
+        print("                          With Blocker: ", blocking_card.get_name())
         return False
 
     def playable_card(self, playable_cards, game_state, cards_on_board, turn):

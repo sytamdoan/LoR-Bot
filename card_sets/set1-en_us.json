@@ -43,6 +43,86 @@
   },
   {
     "associatedCards": [],
+    "associatedCardRefs": [],
+    "assets": [
+      {
+        "gameAbsolutePath": "http://dd.b.pvp.net/3_14_0/set6/en_us/img/cards/06RU002T1.png",
+        "fullAbsolutePath": "http://dd.b.pvp.net/3_14_0/set6/en_us/img/cards/06RU002T1-full.png"
+      }
+    ],
+    "regions": [
+      "Runeterra"
+    ],
+    "regionRefs": [
+      "Runeterra"
+    ],
+    "attack": 3,
+    "cost": 4,
+    "health": 4,
+    "description": "",
+    "descriptionRaw": "",
+    "levelupDescription": "",
+    "levelupDescriptionRaw": "",
+    "flavorText": "",
+    "artistName": "",
+    "name": "Varus",
+    "cardCode": "06RU009",
+    "keywords": [
+      "Quick Attack"
+    ],
+    "keywordRefs": [
+      "QuickStrike"
+    ],
+    "spellSpeed": "",
+    "spellSpeedRef": "",
+    "rarity": "None",
+    "rarityRef": "None",
+    "subtypes": [],
+    "supertype": "Champion",
+    "type": "Unit",
+    "collectible": false,
+    "set": "Set6"
+  },
+  {
+    "associatedCards": [],
+    "associatedCardRefs": [],
+    "assets": [
+      {
+        "gameAbsolutePath": "http://dd.b.pvp.net/3_14_0/set3/en_us/img/cards/03MT079.png",
+        "fullAbsolutePath": "http://dd.b.pvp.net/3_14_0/set3/en_us/img/cards/03MT079-full.png"
+      }
+    ],
+    "regions": [
+      "Targon"
+    ],
+    "regionRefs": [
+      "Targon"
+    ],
+    "attack": 2,
+    "cost": 2,
+    "health": 2,
+    "description": "Iula",
+    "descriptionRaw": "",
+    "levelupDescription": "",
+    "levelupDescriptionRaw": "",
+    "flavorText": "",
+    "artistName": "Dao Le",
+    "name": "Iula",
+    "cardCode": "05MT013",
+    "keywords": [],
+    "keywordRefs": [],
+    "spellSpeed": "",
+    "spellSpeedRef": "",
+    "rarity": "COMMON",
+    "rarityRef": "Common",
+    "subtypes": [],
+    "supertype": "",
+    "type": "Unit",
+    "collectible": true,
+    "set": "Set3"
+  },
+  {
+    "associatedCards": [],
     "associatedCardRefs": [
       "01IO015T1",
       "01IO015T2"
