@@ -16,6 +16,9 @@ class Card:
         
     def is_landmark(self) -> bool:
         return self.type == "Landmark"
+        
+    def is_champion(self) -> bool:
+        return self.supertype == "Champion"
 
     def is_spell(self) -> bool:
         return self.type == "Spell"

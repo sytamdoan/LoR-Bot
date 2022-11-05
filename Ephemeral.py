@@ -46,7 +46,7 @@ class Ephemeral(Strategy):
                     print("                        Harrowing  Attacker: ", enemy_card.get_name())
                     return True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) < enemy_card.attack) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords and blocking_card.get_name() != "Zed"): 
+            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) < enemy_card.attack and "Overwhelm" not in enemy_card.keywords) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords and blocking_card.get_name() != "Zed"): 
                 
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
@@ -61,12 +61,13 @@ class Ephemeral(Strategy):
 
     def playable_card(self, playable_cards, game_state, cards_on_board, turn):
         attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
-                             3 * int("Ephemeral" in attack_card.keywords) - 4 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot"), reverse=True)
+                            3 * int("Ephemeral" in attack_card.keywords) - 4 * int(game_state == GameState.Defend_Turn 
+                            and attack_card.name == "Shark Chariot") + 3 * int(attack_card.is_champion)), reverse=True)
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
-            if name == "Hecarim" and ("Ephemeral" not in playable_card_in_hand.keywords):
+            if name == "Hecarim":
                 return playable_card_in_hand
-            if name == "Zed" and ("Ephemeral" not in playable_card_in_hand.keywords):
+            if name == "Zed":
                 return playable_card_in_hand  
             if game_state == GameState.Defend_Turn:
                 if name == "Soul Shepherd":
