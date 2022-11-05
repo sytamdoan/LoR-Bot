@@ -54,7 +54,7 @@ class StateMachine:
             cards_data += json.load(open("card_sets/"+card_set, encoding="utf8"))
 
         return {card["cardCode"]: Card(card["name"], card["cost"], card["attack"],
-                                       card["health"], card["type"], card["keywords"], card["descriptionRaw"]) for card in cards_data}
+                                       card["health"], card["type"], card["keywords"], card["descriptionRaw"], card["supertype"]) for card in cards_data}
 
     def _update_window_info(self, handle, window_info):
         if win32gui.GetWindowText(handle) == "Legends of Runeterra":

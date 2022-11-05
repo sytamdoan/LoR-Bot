@@ -1,5 +1,5 @@
 class Card:
-    def __init__(self, name, cost, attack, health, type, keywords, description_raw):
+    def __init__(self, name, cost, attack, health, type, keywords, description_raw,supertype):
         self.name = name
         self.cost = cost
         self.attack = attack
@@ -7,6 +7,7 @@ class Card:
         self.type = type
         self.keywords = keywords
         self.description_raw = description_raw
+        self.supertype = supertype
 
     def __str__(self):
         return "Card({} ({}) T: {} A: {} H: {})".format(self.name, self.cost, self.type, self.attack, self.health)
@@ -29,7 +30,7 @@ class Card:
 
 class InGameCard(Card):
     def __init__(self, card, x, y, w, h, is_local):
-        super().__init__(card.name, card.cost, card.attack, card.health, card.type, card.keywords, card.description_raw)
+        super().__init__(card.name, card.cost, card.attack, card.health, card.type, card.keywords, card.description_raw,  card.supertype)
         self.top_center = (int(x + w / 2), int(y - h / 4))
         self.is_local = is_local
 
