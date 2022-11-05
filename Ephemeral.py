@@ -45,6 +45,7 @@ class Ephemeral(Strategy):
                     print("                        Harrowing  Blocker: ", blocking_card.get_name())
                     print("                        Harrowing  Attacker: ", enemy_card.get_name())
                     return True
+                
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
             if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) < enemy_card.attack and "Overwhelm" not in enemy_card.keywords) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords and blocking_card.get_name() != "Zed"): 
                 
@@ -61,10 +62,12 @@ class Ephemeral(Strategy):
 
     def playable_card(self, playable_cards, game_state, cards_on_board, turn):
         attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
-                            3 * int("Ephemeral" in attack_card.keywords) - 4 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot") + 
+                            3 * int("Ephemeral" in attack_card.keywords) - 6 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot") + 
                             3 * int(attack_card.is_champion()) + 3  * int(game_state == GameState.Attack_Turn and attack_card.name == "Shark Chariot") +
                             6  * int(attack_card.name == "The Harrowing") , reverse=True)
         for playable_card_in_hand in attack_sort:
+            name = playable_card_in_hand.get_name();
+            print("Looking in hand: ", name);
             if game_state == GameState.Defend_Turn:
                 if name == "Soul Shepherd":
                     return playable_card_in_hand
