@@ -79,7 +79,9 @@ class Ephemeral(Strategy):
                 if name == "Shark Chariot":
                     return playable_card_in_hand
                 if name == "Dragon Ambush" and turn >= 5:
-                    return playable_card_in_hand    
+                    return playable_card_in_hand 
+                if name == "Strike Up The Band" and turn >= 7:
+                    return playable_card_in_hand 
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
             if name == "Shadowshift":
