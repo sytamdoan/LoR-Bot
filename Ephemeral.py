@@ -35,8 +35,18 @@ class Ephemeral(Strategy):
             if "Elusive" in enemy_card.keywords or "Fearsome" in enemy_card.keywords and blocking_card.attack < 3:
                 continue
             is_blockable = True
+            if (harrowingTurn):
+                for ally_card in ally_cards:  # Check if card is already blocked
+                    if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
+                        is_blockable = False
+                        break
+                if is_blockable:
+                    self.drag_card_from_to(blocking_card.get_pos(), enemy_card.get_pos())
+                    print("                        Harrowing  Blocker: ", blocking_card.get_name())
+                    print("                        Harrowing  Attacker: ", enemy_card.get_name())
+                    return True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) <= enemy_card.attack) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords and blocking_card.get_name() != "Zed"): 
+            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) < enemy_card.attack) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords and blocking_card.get_name() != "Zed"): 
                 
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
@@ -49,9 +59,9 @@ class Ephemeral(Strategy):
                     return True
         return False
 
-    def playable_card(self, playable_cards, game_state, cards_on_board):
+    def playable_card(self, playable_cards, game_state, cards_on_board, turn):
         attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
-                             3 * int("Ephemeral" in attack_card.keywords), reverse=True)
+                             3 * int("Ephemeral" in attack_card.keywords) - 4 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot"), reverse=True)
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
             if name == "Hecarim" and ("Ephemeral" not in playable_card_in_hand.keywords):
@@ -66,7 +76,9 @@ class Ephemeral(Strategy):
                 if name == "Opulent Foyer":
                     return playable_card_in_hand
                 if name == "Shark Chariot":
-                    return playable_card_in_hand         
+                    return playable_card_in_hand
+                if name == "Dragon Ambush" and turn >= 5:
+                    return playable_card_in_hand    
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
             if name == "Shadowshift":
@@ -99,7 +111,7 @@ class Ephemeral(Strategy):
         # Check if non-ephemeral unit is in danger
         for attack_card in cards_on_board["cards_attk"]:
             unit_in_danger = attack_card.attack == 0 or "Ephemeral" not in attack_card.keywords and any(map(
-                lambda enemy_card: enemy_card.attack >= attack_card.health + 2, cards_on_board["opponent_cards_board"]))
+                lambda enemy_card: enemy_card.attack >= attack_card.health + 3, cards_on_board["opponent_cards_board"]))
             if unit_in_danger and attack_card.get_name() != "Zed" and "Elusive" not in attack_card.keywords:
                 print("                          Protecting Attacker: ", attack_card.get_name())
                 self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0], 100))
