@@ -138,6 +138,7 @@ class Bot:
             sleep(3)
             return
         elif self.game_state == GameState.Blocking:
+            harrowingTurn = False;
             # Double check to avoid False Positives (card draw animation, card play animation...)
             if not self.first_pass_blocking:
                 self.first_pass_blocking = True
@@ -146,7 +147,8 @@ class Bot:
                 return
 
             block_counter = 0
-            while block_counter < 12 and self.deck_strategy.block(self.cards_on_board, self.window_x, self.window_y, self.window_height, self.turn):
+            harrowingTurn = self.deck_strategy.Harrow_is_coming(self.cards_on_board, self.turn)
+            while block_counter < 12 and self.deck_strategy.block(self.cards_on_board, self.window_x, self.window_y, self.window_height, harrowingTurn):
                 sleep(2)
                 self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info(
                     call_game_state=False)

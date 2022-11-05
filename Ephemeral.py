@@ -12,23 +12,22 @@ class Ephemeral(Strategy):
         self.spawn_on_attack = 0  # Increments when Shark Chariot dies
         self.hecarim_backed = False
 
-    def block(self, cards_on_board, window_x, window_y, window_height, turn):
+    def block(self, cards_on_board, window_x, window_y, window_height, harrowingTurn):
         self.window_x = window_x
         self.window_y = window_y
         self.window_height = window_height
 
         for i, blocking_card in enumerate(cards_on_board["cards_board"]):
-            if i < self.block_counter or "Can't Block" in blocking_card.keywords or "Stun" in blocking_card.keywords:
+            if i < self.block_counter or "Can't Block" in blocking_card.keywords:
                 continue
-            if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"],cards_on_board["cards_hand"], turn):
+            if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"], cards_on_board["cards_hand"], harrowingTurn):
                 self.block_counter = (self.block_counter + 1) % len(cards_on_board["cards_board"])
                 return True
 
         self.block_counter = 0
         return False
 
-    def blocked_with(self, blocking_card, enemy_cards, ally_cards, cards_in_hand, turn):
-        harrowingTurn = (self.cards_on_board["cards_hand"], turn);
+    def blocked_with(self, blocking_card, enemy_cards, ally_cards, cards_on_board, harrowingTurn):
         if(harrowingTurn):
             print(" Harrowing Is Coming")
         for enemy_card in enemy_cards:
@@ -143,7 +142,8 @@ class Ephemeral(Strategy):
         return max(units_in_hand, key=lambda card_in_hand: card_in_hand.attack + card_in_hand.health)
 
     def Harrow_is_coming(self, cards_on_board, turn) -> bool:
-            for playable_card_in_hand in cards_on_board:
+            for card_in_hand in cards_on_board["cards_hand"]:
+                name = card_in_hand.get_name()
                 if name == "The Harrowing" and turn >= 6 :
                     return True;
             return False
