@@ -12,29 +12,31 @@ class Ephemeral(Strategy):
         self.spawn_on_attack = 0  # Increments when Shark Chariot dies
         self.hecarim_backed = False
 
-    def block(self, cards_on_board, window_x, window_y, window_height):
+    def block(self, cards_on_board, window_x, window_y, window_height, turn):
         self.window_x = window_x
         self.window_y = window_y
         self.window_height = window_height
 
         for i, blocking_card in enumerate(cards_on_board["cards_board"]):
-            if i < self.block_counter or blocking_card.get_name() == "Zed" or "Can't Block" in blocking_card.keywords or "Stun" in blocking_card.keywords:
+            if i < self.block_counter or "Can't Block" in blocking_card.keywords or "Stun" in blocking_card.keywords:
                 continue
-            if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"]):
+            if self.blocked_with(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"], turn):
                 self.block_counter = (self.block_counter + 1) % len(cards_on_board["cards_board"])
                 return True
 
         self.block_counter = 0
         return False
 
-    def blocked_with(self, blocking_card, enemy_cards, ally_cards):
+    def blocked_with(self, blocking_card, enemy_cards, ally_cards, turn):
+        harrowingTurn = self.Harrow_is_coming(blocking_card, cards_on_board["opponent_cards_attk"], cards_on_board["cards_attk"], turn);
         for enemy_card in enemy_cards:
             # Elusive and Fearsome check
             if "Elusive" in enemy_card.keywords or "Fearsome" in enemy_card.keywords and blocking_card.attack < 3:
                 continue
             is_blockable = True
             # if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health:  # Defensive block
-            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) <= enemy_card.attack) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords):  # Aggressive block
+            if "Ephemeral" in blocking_card.keywords or enemy_card.attack < blocking_card.health or ((blocking_card.health*3) <= enemy_card.attack) or ((enemy_card.health == blocking_card.attack) and "Elusive" not in blocking_card.keywords and blocking_card.get_name() != "Zed"): 
+                
                 for ally_card in ally_cards:  # Check if card is already blocked
                     if abs(ally_card.get_pos()[0] - enemy_card.get_pos()[0]) < 10:
                         is_blockable = False
@@ -98,6 +100,7 @@ class Ephemeral(Strategy):
             unit_in_danger = attack_card.attack == 0 or "Ephemeral" not in attack_card.keywords and any(map(
                 lambda enemy_card: enemy_card.attack >= attack_card.health + 2, cards_on_board["opponent_cards_board"]))
             if unit_in_danger and attack_card.get_name() != "Zed" and "Elusive" not in attack_card.keywords:
+                print("                          Protecting Attacker: ", attack_card.get_name())
                 self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0], 100))
                 return False
 
@@ -136,3 +139,11 @@ class Ephemeral(Strategy):
             return next(ephemerals, units_in_hand[0])
         # Select the strongest
         return max(units_in_hand, key=lambda card_in_hand: card_in_hand.attack + card_in_hand.health)
+
+    def Harrow_is_coming(self, playable_cards, game_state, cards_on_board, turn) -> bool:
+            attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
+                                 3 * int("Ephemeral" in attack_card.keywords), reverse=True)
+            for playable_card_in_hand in attack_sort:
+                if name == "The Harrowing" and turn >= 6 :
+                    return True;
+            return False
