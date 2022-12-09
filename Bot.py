@@ -109,6 +109,8 @@ class Bot:
         if self.mana == -1:
             print("Unknown mana...")
             playAbleCounter.append[1];
+            print("The counter on playAbleCounter..")
+            print(playAbleCounter.append[1])
             sleep(4)
             return False
         if self.mana > self.turn:  # New turn
