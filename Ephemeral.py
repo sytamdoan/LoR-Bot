@@ -7,7 +7,7 @@ class Ephemeral(Strategy):
     def __init__(self, mouse_handler):
         super().__init__(mouse_handler)
 
-        self.mulligan_cards = ("Zed", "Shark Chariot", "Shadow Fiend")
+        self.mulligan_cards = ("Zed", "Shark Chariot", "Boisterous Host")
         self.graveyard = defaultdict(int)  # Counter of dead cards used for Harrowing
         self.spawn_on_attack = 0  # Increments when Shark Chariot dies
         self.hecarim_backed = False
@@ -68,7 +68,7 @@ class Ephemeral(Strategy):
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name();
             print("Looking in hand: ", name);
-            if game_state == GameState.Defend_Turn:
+            if game_state == GameState.Defend_Turn and not harrowingTurn:
                 if name == "Soul Shepherd":
                     return playable_card_in_hand
                 if name == "Shadow Apprentice":

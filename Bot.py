@@ -43,6 +43,9 @@ class Bot:
 
     def _get_mana(self, frames):
         # Magic
+        showImage = image.crop(box=(1585, 638, 1635, 675)
+        showImage.show()
+        cv2.waitKey()
         mana_vals = tuple(i for image in frames for i, mask in enumerate(MANA_MASKS) if sum(map(bool, (val for edge, msk in zip(cv2.Canny(cv2.cvtColor(
             np.array(image.crop(box=(1585, 638, 1635, 675))), cv2.COLOR_BGR2GRAY), 100, 100), mask) for val in edge[msk]))) / NUM_PX_MASK[i] > 0.95)
 
@@ -83,6 +86,7 @@ class Bot:
             if not self.is_state_playable(playAbleCounter):
                 if len(playAbleCounter) >= 5:
                     #Exit Program
+                    cv2.destroyAllWindows()
                     exit(1)
                 continue
             self.play()
