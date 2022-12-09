@@ -80,8 +80,8 @@ class Bot:
 
             self._get_mana(frames)
 
-            if not self.is_state_playable():
-                if playAbleCounter.len() >= 5:
+            if not self.is_state_playable(playAbleCounter):
+                if len(playAbleCounter) >= 5:
                     #Exit Program
                     exit(1)
                 continue
@@ -108,9 +108,8 @@ class Bot:
             return False
         if self.mana == -1:
             print("Unknown mana...")
-            playAbleCounter.append[1];
-            print("The counter on playAbleCounter..")
-            print(playAbleCounter.append[1])
+            playAbleCounter.append(1);
+            print("The counter on playAbleCounter.." + str(len(playAbleCounter)))
             sleep(4)
             return False
         if self.mana > self.turn:  # New turn
@@ -121,6 +120,7 @@ class Bot:
             sleep(2)
             return False
         playAbleCounter.clear();
+        print("Clearing Counter")
         return True
 
     def play(self):
