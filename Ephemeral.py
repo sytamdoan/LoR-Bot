@@ -60,7 +60,7 @@ class Ephemeral(Strategy):
                     return True
         return False
 
-    def playable_card(self, playable_cards, game_state, cards_on_board, turn):
+    def playable_card(self, playable_cards, game_state, cards_on_board, harrowingTurn):
         attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
                             3 * int("Ephemeral" in attack_card.keywords) - 6 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot") + 
                             3 * int(attack_card.is_champion()) + 3  * int(game_state == GameState.Attack_Turn and attack_card.name == "Shark Chariot") +

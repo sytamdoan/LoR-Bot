@@ -43,9 +43,6 @@ class Bot:
 
     def _get_mana(self, frames):
         # Magic
-        showImage = image.crop(box=(1585, 638, 1635, 675)
-        showImage.show()
-        cv2.waitKey()
         mana_vals = tuple(i for image in frames for i, mask in enumerate(MANA_MASKS) if sum(map(bool, (val for edge, msk in zip(cv2.Canny(cv2.cvtColor(
             np.array(image.crop(box=(1585, 638, 1635, 675))), cv2.COLOR_BGR2GRAY), 100, 100), mask) for val in edge[msk]))) / NUM_PX_MASK[i] > 0.95)
 
@@ -129,7 +126,8 @@ class Bot:
 
     def play(self):
         in_game_cards = [card for cards in self.cards_on_board.values() for card in cards]
-
+        harrowingTurn = False;
+        harrowingTurn = self.deck_strategy.Harrow_is_coming(self.cards_on_board, self.turn)
         if self.game_state == GameState.Mulligan:
             print("Thinking about mulligan...")
             sleep(10)
@@ -159,8 +157,6 @@ class Bot:
                 return
 
             block_counter = 0
-            harrowingTurn = False;
-            harrowingTurn = self.deck_strategy.Harrow_is_coming(self.cards_on_board, self.turn)
             while block_counter < 12 and self.deck_strategy.block(self.cards_on_board, self.window_x, self.window_y, self.window_height, harrowingTurn):
                 sleep(2)
                 self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info(
@@ -199,7 +195,7 @@ class Bot:
                 keyboard.send("space")
             else:
                 playable_card_in_hand = self.deck_strategy.playable_card(
-                    playable_cards, self.game_state, self.cards_on_board, self.turn)
+                    playable_cards, self.game_state, self.cards_on_board, self.turn, harrowingTurn)
                 if playable_card_in_hand:
                     print("Playing card: ", playable_card_in_hand)
                     self.play_card(playable_card_in_hand)
