@@ -1,4 +1,5 @@
 import cv2
+import sys
 import constants
 import numpy as np
 import keyboard
@@ -49,6 +50,7 @@ class Bot:
 
     def run(self):
         while True:
+            playAbleCounter =[]
             self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info()
 
             if isinstance(self.deck_type, DeckType) and self.deck_strategy is None:
@@ -79,6 +81,9 @@ class Bot:
             self._get_mana(frames)
 
             if not self.is_state_playable():
+                if playAbleCounter.len() >= 5:
+                    #Exit Program
+                    exit(1)
                 continue
             self.play()
 
@@ -93,7 +98,7 @@ class Bot:
             sleep(1.5)
         sleep(1)
 
-    def is_state_playable(self) -> bool:
+    def is_state_playable(self, playAbleCounter) -> bool:
         if self.game_state == GameState.Hold:
             return False
         if self.game_state == GameState.Menus:
@@ -103,6 +108,7 @@ class Bot:
             return False
         if self.mana == -1:
             print("Unknown mana...")
+            playAbleCounter.append[1];
             sleep(4)
             return False
         if self.mana > self.turn:  # New turn
@@ -112,6 +118,7 @@ class Bot:
             self.first_pass_blocking = self.first_pass_spell = False
             sleep(2)
             return False
+        playAbleCounter.clear();
         return True
 
     def play(self):
