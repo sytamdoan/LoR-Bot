@@ -67,7 +67,7 @@ class Ephemeral(Strategy):
                             6  * int(attack_card.name == "The Harrowing") , reverse=True)
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
-            if mana <= 4 and harrowingTurn:
+            if mana <= 4 and harrowingTurn and game_state == GameState.Defend_Turn:
                 continue
             if name == "Shadowshift" or name == "Thread the Needle":
                 continue
