@@ -69,22 +69,25 @@ class Ephemeral(Strategy):
         print(*attack_sort)
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
-            if mana <= 4 and harrowingTurn and game_state == GameState.Defend_Turn:
+            if mana <= 3 and harrowingTurn and game_state == GameState.Defend_Turn:
+                print("it's harrowingTurn and mana is ", mana);
                 continue
             if name == "Shadowshift" or name == "Thread the Needle":
                 continue
             if name == "Darkwater Scourge" and turn < 4:
                 continue;
-            if game_state == GameState.Defend_Turn and not harrowingTurn:
+            if game_state == GameState.Defend_Turn:
                 if name == "Soul Shepherd":
                     return playable_card_in_hand
                 if name == "Shadow Apprentice":
                     return playable_card_in_hand
                 if name == "Shark Chariot":
                     return playable_card_in_hand
-                if name == "Dragon Ambush" and turn >= 5:
+                if name == "Dragon Ambush" and turn >= 6:
                     return playable_card_in_hand 
-                if name == "Strike Up The Band" and turn >= 7:
+                if name == "Strike Up The Band" and turn >= 6:
+                    return playable_card_in_hand 
+                if name == "Darkwater Scourge" and turn >= 4 and mana >=6:
                     return playable_card_in_hand 
             if game_state == GameState.Attack_Turn or game_state == GameState.Defend_Turn and ("Ephemeral" not in playable_card_in_hand.keywords and not playable_card_in_hand.is_spell()):
                 if not playable_card_in_hand.is_spell():
