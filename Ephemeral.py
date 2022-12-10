@@ -142,7 +142,7 @@ class Ephemeral(Strategy):
                     break
         
         # Position Gwen to the right for max damage output
-        if any(map(lambda attk_card: attk_card.get_name() == "Gwen", cards_on_board["cards_attk"])) and not self.gwen_backed :  # Retreat Hecarim from attack if it is on board
+        if any(map(lambda attk_card: attk_card.get_name() == "Gwen", cards_on_board["cards_attk"])) and not self.gwen_backed :  # Retreat Gwen from attack if it is on board
             for attack_card in cards_on_board["cards_attk"]:
                 if attack_card.get_name() == "Gwen":
                     self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0],  100))
@@ -150,9 +150,9 @@ class Ephemeral(Strategy):
                     print("moving Gwen back")
                     sleep(1)
                     return False  # Not done yet
-        elif self.gwen_backed:  # Put Hecarim back in attack to the last position
+        elif self.gwen_backed:  # Put Gwen back in attack to the last position
             for unit_card in cards_on_board["cards_board"]:
-                if unit_card.get_name() == "gwen":
+                if unit_card.get_name() == "Gwen":
                     self.drag_card_from_to(unit_card.get_pos(), (unit_card.get_pos()[0], window_height // 2))
                     self.gwen_backed = False
                     print("moving Gwen foward")
