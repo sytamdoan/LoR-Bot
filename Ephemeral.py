@@ -84,6 +84,8 @@ class Ephemeral(Strategy):
             name = playable_card_in_hand.get_name()
             if name == "Shadowshift" or name == "Thread the Needle":
                 continue
+            if name == "Darkwater Scourge" and turn < 4:
+                continue;
             if game_state == GameState.Attack_Turn or game_state == GameState.Defend_Turn and ("Ephemeral" not in playable_card_in_hand.keywords and not playable_card_in_hand.is_spell()):
                 if not playable_card_in_hand.is_spell():
                     # Assume a unit is dead as soon as you play it (its an Ephemeral deck anyways)
@@ -113,7 +115,7 @@ class Ephemeral(Strategy):
         for attack_card in cards_on_board["cards_attk"]:
             unit_in_danger = attack_card.attack == 0 or "Ephemeral" not in attack_card.keywords and any(map(
                 lambda enemy_card: enemy_card.attack >= attack_card.health + 3, cards_on_board["opponent_cards_board"]))
-            if unit_in_danger and attack_card.get_name() != "Zed" and "Elusive" not in attack_card.keywords:
+            if unit_in_danger and (attack_card.get_name() != "Zed" or attack_card.get_name() != "Gwen") and "Elusive" not in attack_card.keywords:
                 print("                          Protecting Attacker: ", attack_card.get_name())
                 self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0], 100))
                 return False
