@@ -7,7 +7,7 @@ class Ephemeral(Strategy):
     def __init__(self, mouse_handler):
         super().__init__(mouse_handler)
 
-        self.mulligan_cards = ("Gwen", "Shark Chariot", "Boisterous Host")
+        self.mulligan_cards = ("Gwen", "Shark Chariot", "Boisterous Host", "Redeemed Prodigy")
         self.graveyard = defaultdict(int)  # Counter of dead cards used for Harrowing
         self.spawn_on_attack = 0  # Increments when Shark Chariot dies
         self.hecarim_backed = False
