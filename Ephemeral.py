@@ -11,6 +11,7 @@ class Ephemeral(Strategy):
         self.graveyard = defaultdict(int)  # Counter of dead cards used for Harrowing
         self.spawn_on_attack = 0  # Increments when Shark Chariot dies
         self.hecarim_backed = False
+        self.gwen_backed = False
 
     def block(self, cards_on_board, window_x, window_y, window_height, harrowingTurn):
         self.window_x = window_x
@@ -137,6 +138,22 @@ class Ephemeral(Strategy):
                 if unit_card.get_name() == "Hecarim":
                     self.drag_card_from_to(unit_card.get_pos(), (unit_card.get_pos()[0], window_height // 2))
                     self.hecarim_backed = False
+                    sleep(1)
+                    break
+        
+        # Position Gwen to the right for max damage output
+        if any(map(lambda attk_card: attk_card.get_name() == "Gwen", cards_on_board["cards_attk"])) and not self.gwen_backed :  # Retreat Hecarim from attack if it is on board
+            for attack_card in cards_on_board["cards_attk"]:
+                if attack_card.get_name() == "Gwen":
+                    self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0],  100))
+                    self.gwen_backed = True
+                    sleep(1)
+                    return False  # Not done yet
+        elif self.hecarim_backed:  # Put Hecarim back in attack to the last position
+            for unit_card in cards_on_board["cards_board"]:
+                if unit_card.get_name() == "gwen":
+                    self.drag_card_from_to(unit_card.get_pos(), (unit_card.get_pos()[0], window_height // 2))
+                    self.gwen_backed = False
                     sleep(1)
                     break
 
