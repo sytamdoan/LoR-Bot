@@ -41,6 +41,7 @@
     "collectible": true,
     "set": "Set1"
   },
+  
   {
     "associatedCards": [],
     "associatedCardRefs": [],
@@ -192,6 +193,44 @@
     "artistName": "XAXIERLEROUX",
     "name": "Moonlit Glenkeeper",
     "cardCode": "06SI041",
+    "keywords": [],
+    "keywordRefs": [],
+    "spellSpeed": "",
+    "spellSpeedRef": "",
+    "rarity": "COMMON",
+    "rarityRef": "common",
+    "subtypes": [],
+    "supertype": "",
+    "type": "Unit",
+    "collectible": true,
+    "set": "Set1"
+  },
+  {
+    "associatedCards": [],
+    "associatedCardRefs": [],
+    "assets": [
+      {
+        "gameAbsolutePath": "",
+        "fullAbsolutePath": ""
+      }
+    ],
+    "regions": [
+      "Shadow Isles"
+    ],
+    "regionRefs": [
+      "ShadowIsles"
+    ],
+    "attack": 2,
+    "cost": 2,
+    "health": 2,
+    "description": "",
+    "descriptionRaw": "",
+    "levelupDescription": "",
+    "levelupDescriptionRaw": "",
+    "flavorText": "Does This Matter?",
+    "artistName": "",
+    "name": "Redeemed Prodigy",
+    "cardCode": "06SI038",
     "keywords": [],
     "keywordRefs": [],
     "spellSpeed": "",

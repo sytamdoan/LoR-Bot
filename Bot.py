@@ -49,8 +49,8 @@ class Bot:
         self.mana = mana_vals[0] if mana_vals else -1
 
     def run(self):
+        playAbleCounter =[]
         while True:
-            playAbleCounter =[]
             self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info()
 
             if isinstance(self.deck_type, DeckType) and self.deck_strategy is None:
@@ -79,11 +79,11 @@ class Bot:
             self.window_height = window_info[3]
 
             self._get_mana(frames)
-
             if not self.is_state_playable(playAbleCounter):
+                playAbleCounter.append(1);
                 if len(playAbleCounter) >= 5:
                     #Exit Program
-                    cv2.destroyAllWindows()
+                    print("Exiting")
                     exit(1)
                 continue
             self.play()
@@ -109,8 +109,6 @@ class Bot:
             return False
         if self.mana == -1:
             print("Unknown mana...")
-            playAbleCounter.append(1);
-            print("The counter on playAbleCounter.." + str(len(playAbleCounter)))
             sleep(4)
             return False
         if self.mana > self.turn:  # New turn
