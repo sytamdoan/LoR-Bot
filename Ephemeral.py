@@ -3,6 +3,7 @@ from constants import GameState
 from collections import defaultdict
 from Strategy import Strategy
 
+
 class Ephemeral(Strategy):
     def __init__(self, mouse_handler):
         super().__init__(mouse_handler)
@@ -65,6 +66,7 @@ class Ephemeral(Strategy):
                             3 * int("Ephemeral" in attack_card.keywords) - 6 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot") + 
                             3 * int(attack_card.is_champion()) + 3  * int(game_state == GameState.Attack_Turn and attack_card.name == "Shark Chariot") +
                             6  * int(attack_card.name == "The Harrowing") , reverse=True)
+        print(*attack_sort)
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
             if mana <= 4 and harrowingTurn and game_state == GameState.Defend_Turn:

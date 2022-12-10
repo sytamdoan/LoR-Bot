@@ -7,6 +7,8 @@ from time import sleep
 from StateMachine import DeckType
 from constants import GameState
 from MouseHandler import MouseHandler
+from pynput.keyboard import Key, Controller
+keyboardPress = Controller()
 
 MANA_MASKS = (constants.ZERO, constants.ONE, constants.TWO, constants.THREE, constants.FOUR,
               constants.FIVE, constants.SIX, constants.SEVEN, constants.EIGHT, constants.NINE, constants.TEN)
@@ -84,6 +86,15 @@ class Bot:
                 if len(playAbleCounter) >= 5:
                     #Exit Program
                     print("Exiting")
+                    keyboardPress.press(Key.alt)
+                    sleep(0.5)
+                    keyboardPress.press(Key.tab)
+                    sleep(0.5)
+                    keyboardPress.release(Key.tab)
+                    sleep(0.5)
+                    keyboardPress.release(Key.alt)
+                    sleep(0.5)
+                    keyboardPress.release('q')
                     exit(1)
                 continue
             self.play()
