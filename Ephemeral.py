@@ -82,7 +82,7 @@ class Ephemeral(Strategy):
                     return playable_card_in_hand 
         for playable_card_in_hand in attack_sort:
             name = playable_card_in_hand.get_name()
-            if name == "Shadowshift":
+            if name == "Shadowshift" or name == "Thread the Needle":
                 continue
             if game_state == GameState.Attack_Turn or game_state == GameState.Defend_Turn and ("Ephemeral" not in playable_card_in_hand.keywords and not playable_card_in_hand.is_spell()):
                 if not playable_card_in_hand.is_spell():
@@ -147,13 +147,15 @@ class Ephemeral(Strategy):
                 if attack_card.get_name() == "Gwen":
                     self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0],  100))
                     self.gwen_backed = True
+                    print("moving Gwen back")
                     sleep(1)
                     return False  # Not done yet
-        elif self.hecarim_backed:  # Put Hecarim back in attack to the last position
+        elif self.gwen_backed:  # Put Hecarim back in attack to the last position
             for unit_card in cards_on_board["cards_board"]:
                 if unit_card.get_name() == "gwen":
                     self.drag_card_from_to(unit_card.get_pos(), (unit_card.get_pos()[0], window_height // 2))
                     self.gwen_backed = False
+                    print("moving Gwen foward")
                     sleep(1)
                     break
 
