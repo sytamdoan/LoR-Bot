@@ -60,14 +60,19 @@ class Ephemeral(Strategy):
                     return True
         return False
 
-    def playable_card(self, playable_cards, game_state, cards_on_board, turn, harrowingTurn):
+    def playable_card(self, playable_cards, game_state, cards_on_board, turn, harrowingTurn, mana):
         attack_sort = sorted(playable_cards, key=lambda attack_card: attack_card.cost + 3 * int(attack_card.is_spell()) +
                             3 * int("Ephemeral" in attack_card.keywords) - 6 * int(game_state == GameState.Defend_Turn and attack_card.name == "Shark Chariot") + 
                             3 * int(attack_card.is_champion()) + 3  * int(game_state == GameState.Attack_Turn and attack_card.name == "Shark Chariot") +
                             6  * int(attack_card.name == "The Harrowing") , reverse=True)
         for playable_card_in_hand in attack_sort:
-            name = playable_card_in_hand.get_name();
-            print("Looking in hand: ", name);
+            name = playable_card_in_hand.get_name()
+            if mana <= 4 and harrowingTurn:
+                continue
+            if name == "Shadowshift" or name == "Thread the Needle":
+                continue
+            if name == "Darkwater Scourge" and turn < 4:
+                continue;
             if game_state == GameState.Defend_Turn and not harrowingTurn:
                 if name == "Soul Shepherd":
                     return playable_card_in_hand
@@ -79,12 +84,6 @@ class Ephemeral(Strategy):
                     return playable_card_in_hand 
                 if name == "Strike Up The Band" and turn >= 7:
                     return playable_card_in_hand 
-        for playable_card_in_hand in attack_sort:
-            name = playable_card_in_hand.get_name()
-            if name == "Shadowshift" or name == "Thread the Needle":
-                continue
-            if name == "Darkwater Scourge" and turn < 4:
-                continue;
             if game_state == GameState.Attack_Turn or game_state == GameState.Defend_Turn and ("Ephemeral" not in playable_card_in_hand.keywords and not playable_card_in_hand.is_spell()):
                 if not playable_card_in_hand.is_spell():
                     # Assume a unit is dead as soon as you play it (its an Ephemeral deck anyways)

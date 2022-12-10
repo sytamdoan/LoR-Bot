@@ -193,7 +193,7 @@ class Bot:
                 keyboard.send("space")
             else:
                 playable_card_in_hand = self.deck_strategy.playable_card(
-                    playable_cards, self.game_state, self.cards_on_board, self.turn, harrowingTurn)
+                    playable_cards, self.game_state, self.cards_on_board, self.turn, harrowingTurn,self.mana)
                 if playable_card_in_hand:
                     print("Playing card: ", playable_card_in_hand)
                     self.play_card(playable_card_in_hand)
