@@ -93,6 +93,8 @@ class Ephemeral(Strategy):
                 if not playable_card_in_hand.is_spell():
                     # Assume a unit is dead as soon as you play it (its an Ephemeral deck anyways)
                     self.graveyard[playable_card_in_hand.get_name()] += 1
+                if playable_card_in_hand.is_spell() and turn <= 3:
+                    return None
                 return playable_card_in_hand
                 
         return None
