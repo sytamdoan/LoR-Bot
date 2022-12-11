@@ -118,7 +118,7 @@ class Ephemeral(Strategy):
 
         # Check if non-ephemeral unit is in danger
         for attack_card in cards_on_board["cards_attk"]:
-            unit_in_danger = attack_card.attack == 0 or "Ephemeral" not in attack_card.keywords and any(map(
+            unit_in_danger = attack_card.attack == 0 or attack_card.name == "Soul Shepherd" or "Ephemeral" not in attack_card.keywords and any(map(
                 lambda enemy_card: enemy_card.attack >= attack_card.health + 3, cards_on_board["opponent_cards_board"]))
             if unit_in_danger and (attack_card.get_name() != "Zed" or attack_card.get_name() != "Gwen") and "Elusive" not in attack_card.keywords:
                 print("                          Protecting Attacker: ", attack_card.get_name())
