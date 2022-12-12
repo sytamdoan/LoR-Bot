@@ -135,7 +135,8 @@ class Bot:
 
     def play(self):
         in_game_cards = [card for cards in self.cards_on_board.values() for card in cards]
-        harrowingTurn = False;
+        harrowingTurn = False
+        harrowingTurnAttack = False
         harrowingTurn = self.deck_strategy.Harrow_is_coming(self.cards_on_board, self.turn)
         if self.game_state == GameState.Mulligan:
             print("Thinking about mulligan...")
@@ -196,7 +197,8 @@ class Bot:
                 self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info(
                     call_game_state=False)
 
-                while not self.deck_strategy.reorganize_attack(self.cards_on_board, self.window_x, self.window_y, self.window_height):
+                while not self.deck_strategy.reorganize_attack(self.cards_on_board, self.window_x, self.window_y, self.window_height,harrowingTurnAttack):
+                    harrowingTurnAttack = False
                     sleep(1.25)
                     self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info(
                         call_game_state=False)
@@ -207,6 +209,8 @@ class Bot:
                     playable_cards, self.game_state, self.cards_on_board, self.turn, harrowingTurn,self.mana)
                 if playable_card_in_hand:
                     print("Playing card: ", playable_card_in_hand)
+                    if playable_card_in_hand == "The Harrowing"
+                        harrowingTurnAttack = True
                     self.play_card(playable_card_in_hand)
 
                     # Grant/Pick an ally in hand mechanic

@@ -8,7 +8,7 @@ class Ephemeral(Strategy):
     def __init__(self, mouse_handler):
         super().__init__(mouse_handler)
 
-        self.mulligan_cards = ("Gwen", "Shark Chariot", "Boisterous Host", "Redeemed Prodigy")
+        self.mulligan_cards = ("Gwen", "Shark Chariot", "Boisterous Host")
         self.graveyard = defaultdict(int)  # Counter of dead cards used for Harrowing
         self.spawn_on_attack = 0  # Increments when Shark Chariot dies
         self.gwen_backed = False
@@ -77,29 +77,25 @@ class Ephemeral(Strategy):
             if name == "Darkwater Scourge" and turn < 4:
                 continue;
             if game_state == GameState.Defend_Turn:
-                if name == "Soul Shepherd":
-                    return playable_card_in_hand
-                if name == "Shadow Apprentice":
-                    return playable_card_in_hand
                 if name == "Shark Chariot":
                     return playable_card_in_hand
                 if name == "Dragon Ambush" and turn >= 6:
                     return playable_card_in_hand 
                 if name == "Strike Up The Band" and turn >= 6:
                     return playable_card_in_hand 
-                if name == "Darkwater Scourge" and turn >= 4 and mana >=6:
+                if name == "Darkwater Scourge" and turn >= 4:
                     return playable_card_in_hand 
             if game_state == GameState.Attack_Turn or game_state == GameState.Defend_Turn and ("Ephemeral" not in playable_card_in_hand.keywords and not playable_card_in_hand.is_spell()):
                 if not playable_card_in_hand.is_spell():
                     # Assume a unit is dead as soon as you play it (its an Ephemeral deck anyways)
                     self.graveyard[playable_card_in_hand.get_name()] += 1
                 if playable_card_in_hand.is_spell() and turn <= 3:
-                    return None
+                    continue
                 return playable_card_in_hand
                 
         return None
 
-    def reorganize_attack(self, cards_on_board, window_x, window_y, window_height):
+    def reorganize_attack(self, cards_on_board, window_x, window_y, window_height, harrowingTurnAttack):
         self.window_x = window_x
         self.window_y = window_y
         self.window_height = window_height
@@ -120,7 +116,7 @@ class Ephemeral(Strategy):
         for attack_card in cards_on_board["cards_attk"]:
             unit_in_danger = attack_card.attack == 0 or attack_card.name == "Soul Shepherd" or "Ephemeral" not in attack_card.keywords and any(map(
                 lambda enemy_card: enemy_card.attack >= attack_card.health + 3, cards_on_board["opponent_cards_board"]))
-            if unit_in_danger and (attack_card.get_name() != "Zed" or attack_card.get_name() != "Gwen") and "Elusive" not in attack_card.keywords:
+            if unit_in_danger and not harrowingTurnAttack and (attack_card.get_name() != "Zed" or attack_card.get_name() != "Gwen") and "Elusive" not in attack_card.keywords:
                 print("                          Protecting Attacker: ", attack_card.get_name())
                 self.drag_card_from_to(attack_card.get_pos(), (attack_card.get_pos()[0], 100))
                 return False
