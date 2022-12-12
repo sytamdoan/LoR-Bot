@@ -74,12 +74,12 @@ class Ephemeral(Strategy):
                 continue
             if name == "Shadowshift" or name == "Thread the Needle":
                 continue
-            if name == "Darkwater Scourge" and turn < 4:
+            if name == "Darkwater Scourge" or name == "Silent Shadowseer" and turn < 4:
                 continue;
             if game_state == GameState.Defend_Turn:
                 if name == "Shark Chariot":
                     return playable_card_in_hand
-                if name == "Dragon Ambush" and turn >= 6:
+                if name == "Dragon Ambush" and turn >= 4:
                     return playable_card_in_hand 
                 if name == "Strike Up The Band" and turn >= 6:
                     return playable_card_in_hand 

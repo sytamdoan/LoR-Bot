@@ -83,7 +83,7 @@ class Bot:
             self._get_mana(frames)
             if not self.is_state_playable(playAbleCounter):
                 playAbleCounter.append(1);
-                if len(playAbleCounter) >= 5:
+                if len(playAbleCounter) >= 10:
                     #Exit Program
                     print("Exiting")
                     keyboardPress.press(Key.alt)
