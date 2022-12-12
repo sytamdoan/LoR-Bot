@@ -83,8 +83,6 @@ class Ephemeral(Strategy):
                     return playable_card_in_hand 
                 if name == "Strike Up The Band" and turn >= 6:
                     return playable_card_in_hand 
-                if name == "Darkwater Scourge" and turn >= 4:
-                    return playable_card_in_hand 
             if game_state == GameState.Attack_Turn or game_state == GameState.Defend_Turn and ("Ephemeral" not in playable_card_in_hand.keywords and not playable_card_in_hand.is_spell()):
                 if not playable_card_in_hand.is_spell():
                     # Assume a unit is dead as soon as you play it (its an Ephemeral deck anyways)

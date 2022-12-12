@@ -94,7 +94,16 @@ class Bot:
                     sleep(0.5)
                     keyboardPress.release(Key.alt)
                     sleep(0.5)
+                    keyboardPress.press('q')
                     keyboardPress.release('q')
+                    sleep(0.5)
+                    keyboardPress.press(Key.up)
+                    sleep(0.1)
+                    keyboardPress.release(Key.up)
+                    sleep(0.1)
+                    keyboardPress.press(Key.enter)
+                    sleep(0.1)
+                    keyboardPress.release(Key.enter)
                     exit(1)
                 continue
             self.play()
@@ -209,7 +218,7 @@ class Bot:
                     playable_cards, self.game_state, self.cards_on_board, self.turn, harrowingTurn,self.mana)
                 if playable_card_in_hand:
                     print("Playing card: ", playable_card_in_hand)
-                    if playable_card_in_hand == "The Harrowing"
+                    if playable_card_in_hand == "The Harrowing":
                         harrowingTurnAttack = True
                     self.play_card(playable_card_in_hand)
 
