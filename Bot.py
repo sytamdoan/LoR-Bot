@@ -41,6 +41,7 @@ class Bot:
         self.n_games = 0
         self.first_pass_blocking = False
         self.first_pass_spell = False
+        self.harrowingTurnAttack = False
         self.mouse_handler = MouseHandler()
 
     def _get_mana(self, frames):
@@ -97,6 +98,14 @@ class Bot:
                     keyboardPress.press('q')
                     keyboardPress.release('q')
                     sleep(0.5)
+                    keyboardPress.press(Key.alt)
+                    sleep(0.5)
+                    keyboardPress.press(Key.tab)
+                    sleep(0.5)
+                    keyboardPress.release(Key.tab)
+                    sleep(0.5)
+                    keyboardPress.release(Key.alt)
+                    sleep(0.5)
                     keyboardPress.press(Key.up)
                     sleep(0.1)
                     keyboardPress.release(Key.up)
@@ -145,7 +154,6 @@ class Bot:
     def play(self):
         in_game_cards = [card for cards in self.cards_on_board.values() for card in cards]
         harrowingTurn = False
-        harrowingTurnAttack = False
         harrowingTurn = self.deck_strategy.Harrow_is_coming(self.cards_on_board, self.turn)
         if self.game_state == GameState.Mulligan:
             print("Thinking about mulligan...")
@@ -206,20 +214,20 @@ class Bot:
                 self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info(
                     call_game_state=False)
 
-                while not self.deck_strategy.reorganize_attack(self.cards_on_board, self.window_x, self.window_y, self.window_height,harrowingTurnAttack):
-                    harrowingTurnAttack = False
+                while not self.deck_strategy.reorganize_attack(self.cards_on_board, self.window_x, self.window_y, self.window_height,self.harrowingTurnAttack):
                     sleep(1.25)
                     self.game_state, self.cards_on_board, self.deck_type, self.n_games, self.games_won = self.state_machine.get_game_info(
                         call_game_state=False)
-
                 keyboard.send("space")
+                self.harrowingTurnAttack = False
             else:
                 playable_card_in_hand = self.deck_strategy.playable_card(
                     playable_cards, self.game_state, self.cards_on_board, self.turn, harrowingTurn,self.mana)
                 if playable_card_in_hand:
                     print("Playing card: ", playable_card_in_hand)
                     if playable_card_in_hand == "The Harrowing":
-                        harrowingTurnAttack = True
+                        self.harrowingTurnAttack = True
+                        print("Harrowing is played")
                     self.play_card(playable_card_in_hand)
 
                     # Grant/Pick an ally in hand mechanic
